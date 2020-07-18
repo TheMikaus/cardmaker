@@ -30,6 +30,7 @@ using CardMaker.Events.Managers;
 using CardMaker.Properties;
 using Support.Google.Sheets;
 using Support.UI;
+using System.Globalization;
 
 namespace CardMaker.Forms.Dialogs
 {
@@ -40,6 +41,7 @@ namespace CardMaker.Forms.Dialogs
             const string TRANSLATOR = "translator";
             const string DEFAULT_DEFINE_REFERENCE_TYPE = "default_define_reference_type";
             const string OVERRIDE_DEFINE_REFRENCE_NAME = "override_define_reference_name";
+            const string DEFAULT_PROJECT_LANGUAGE = "default_project_language";
             const string JS_ESCAPE_SINGLE_QUOTES = "js_escape_single_quotes";
             const string JS_TILDE_CODE = "js_tilde_code";
             const string JS_KEEP_FUNCTIONS = "js_keep_functions";
@@ -73,6 +75,8 @@ namespace CardMaker.Forms.Dialogs
                         .generateSpreadsheetReference();
                 },
                 OVERRIDE_DEFINE_REFRENCE_NAME);
+            // MIKAUS TODO: This is just here as a place holder so I remember that this is probably where I want someone to reference a default
+            zQuery.AddPullDownBox("Default Project Language", getAllLanguageNames(), 0, DEFAULT_PROJECT_LANGUAGE);
 
             zQuery.ChangeToTab("Javascript");
             zQuery.AddCheckBox("Escape Single Quotes", ProjectManager.Instance.LoadedProject.jsEscapeSingleQuotes, JS_ESCAPE_SINGLE_QUOTES);
@@ -92,5 +96,21 @@ namespace CardMaker.Forms.Dialogs
                 LayoutManager.Instance.InitializeActiveLayout();
             }
         }
+
+        private static string[] getAllLanguageNames()
+        {
+            if (sAllLanguageNames == null) {
+                CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+                sAllLanguageNames = new string[cultures.Length];
+                for (int languageIdx = 0; languageIdx < cultures.Length; ++languageIdx)
+                {
+                    sAllLanguageNames[languageIdx] = cultures[languageIdx].EnglishName;
+                }
+            }
+
+            return sAllLanguageNames;
+        }
+
+        static string[] sAllLanguageNames = null;
     }
 }

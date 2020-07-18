@@ -410,6 +410,7 @@
     <Compile Include="XML\ProjectLayoutElement.cs" />
     <Compile Include="XML\ProjectLayoutReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XML\ProjectLocalization.cs" />
     <EmbeddedResource Include="Forms\CardMakerMDI.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CardMakerMDI.cs</DependentUpon>
